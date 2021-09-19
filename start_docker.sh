@@ -37,7 +37,7 @@ fi
 
 if [ "$1" = "rust_general" ]; then
   image_chosen="rust_general:latest"
-  echo "Starting container from image ${image_chosen}."
+  echo "Starting container from image ${image_chosen}"
   docker run -it \
     -v "$(pwd):/mnt/repo/" \
     -w "/mnt/repo/" \

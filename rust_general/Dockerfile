@@ -28,9 +28,9 @@ RUN apt update && yes | apt upgrade && yes | apt install \
 ### Run rest of commands as user
 USER "$USER"
 
-COPY --chown="$USER" ./.bashrc "$HOME_DIR/"
-COPY --chown="$USER" ./.gitconfig "$HOME_DIR/"
-COPY --chown="$USER" ./.tmux.conf "$HOME_DIR/"
+COPY --chown="$USER" ./.bashrc "/home/$USER/"
+COPY --chown="$USER" ./.gitconfig "/home/$USER/"
+COPY --chown="$USER" ./.tmux.conf "/home/$USER/"
 
 ### Install Rust
 ENV PATH="${PATH}:/home/${USER}/.cargo/bin/"
