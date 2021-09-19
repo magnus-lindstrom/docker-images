@@ -35,12 +35,15 @@ if [ "$#" -ne "1" ]; then
   exit_with_msg "Function takes exactly one positional argument."
 fi
 
-if [ "$1" = "rust" ]; then
+if [ "$1" = "rust_general" ]; then
+  image_chosen="rust_general:latest"
+  echo "Starting container from image ${image_chosen}."
   docker run -it \
     -v "$(pwd):/mnt/repo/" \
     -w "/mnt/repo/" \
     --net host \
-    rust_docker
+    rust_general:latest \
+    bash
 else
   echo "No image specified."
 fi
