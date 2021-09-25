@@ -42,8 +42,11 @@ if [ "$1" = "rust_general" ]; then
     -v "$(pwd):/mnt/repo/" \
     -w "/mnt/repo/" \
     --net host \
+    --rm \
     rust_general:latest \
     bash
+    # --env become_user=$(whoami) \
+    # --env become_user_uid="$EUID" \
 else
   echo "No image specified."
 fi

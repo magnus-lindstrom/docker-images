@@ -1,43 +1,15 @@
-FROM ubuntu:20.04
+FROM rust:1.31
 
-### General config
-# some packages require interaction in apt update + upgrade
-ENV DEBIAN_FRONTEND=noninteractive
+ARG uid
+ARG user
+ARG home
+ENV uid=$uid
+ENV user=$user
+ENV home=$home
 
-### configure docker user and swap to that user
-ENV USER=magnus
-ARG GROUP="$USER"
-ENV UID=12345
-# ENV GID=23456
-RUN adduser --uid "$UID" "$USER"
+COPY ./.bashrc "${home}/"
+COPY ./.gitconfig "${home}/"
+COPY ./.tmux.conf "${home}/"
 
-### Installations
-# RUN yes | apt install build-essentials
-RUN apt update && yes | apt upgrade && yes | apt install \
-    bash \
-    build-essential \
-    curl \
-    git-all \
-    libssl-dev \
-    # pkg-config \
-    sudo \
-    tmux \
-    tree \
-    vim
-
-### Run rest of commands as user
-USER "$USER"
-
-COPY --chown="$USER" ./.bashrc "/home/$USER/"
-COPY --chown="$USER" ./.gitconfig "/home/$USER/"
-COPY --chown="$USER" ./.tmux.conf "/home/$USER/"
-
-### Install Rust
-ENV PATH="${PATH}:/home/${USER}/.cargo/bin/"
-WORKDIR /tmp/
-RUN curl https://sh.rustup.rs -sSf > ./rust_install && \
-    chmod 755 ./rust_install && \
-    ./rust_install -y && \
-    rm ./rust_install
-
-RUN cargo install wasm-pack
+COPY ./entrypoint.sh /
+ENTRYPOINT /entrypoint.sh
