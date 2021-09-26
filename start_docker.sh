@@ -42,6 +42,7 @@ if [ "$1" = "rust_general" ]; then
     -v "$(pwd):/mnt/repo/" \
     -w "/mnt/repo/" \
     --net host \
+    --user $(id -u):$(id -g) \
     --rm \
     rust_general:latest \
     bash
