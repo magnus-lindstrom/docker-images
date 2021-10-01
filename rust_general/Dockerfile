@@ -24,6 +24,7 @@ RUN chown -R "$user":"$user" "$home"
 RUN apt update && yes | apt upgrade && yes | apt install \
     build-essential \
     curl \
+    less \
     libssl-dev \
     pkg-config \
     sudo \
